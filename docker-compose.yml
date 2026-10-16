@@ -1,0 +1,11 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: tomi-alert-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - tomi-mongo:/data/db
+
+volumes:
+  tomi-mongo:

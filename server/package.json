@@ -1,0 +1,25 @@
+{
+  "name": "tomi-alert-server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/seed/seed.js",
+    "test": "node --test tests/engine.test.js tests/flow.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.1",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.10.0",
+    "tomi-alert": "file:.."
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  }
+}
