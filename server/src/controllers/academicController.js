@@ -7,7 +7,7 @@ import { User } from '../models/User.js'
 import { Notice } from '../models/Notice.js'
 import { MailLog } from '../models/MailLog.js'
 import { asyncHandler, httpError } from '../http.js'
-import { notifyGrade } from '../services/notifyService.js'
+import { notifyExamChange, notifyGrade } from '../services/notifyService.js'
 
 function isAdmin(user) {
   return user.role === 'admin'
@@ -114,6 +114,14 @@ export const createExam = asyncHandler(async (req, res) => {
     inscriptionDeadline: inscriptionDeadline ? new Date(inscriptionDeadline) : undefined,
     classroom: String(classroom || '').trim(),
   })
+  await notifyExamChange({
+    subjectId,
+    action: 'creado',
+    type: exam.type,
+    date: exam.date,
+    inscriptionDeadline: exam.inscriptionDeadline,
+    classroom: exam.classroom,
+  })
   const populated = await exam.populate('subject', 'code name classroom')
   res.status(201).json(populated)
 })
@@ -121,18 +129,61 @@ export const createExam = asyncHandler(async (req, res) => {
 export const updateExam = asyncHandler(async (req, res) => {
   const exam = await Exam.findById(req.params.id)
   if (!exam) throw httpError(404, 'Mesa no encontrada.')
+  const previous = {
+    subject: exam.subject,
+    type: exam.type,
+    date: exam.date,
+    inscriptionDeadline: exam.inscriptionDeadline,
+    classroom: exam.classroom,
+  }
   if (req.body.type) exam.type = req.body.type
   if (req.body.date) exam.date = new Date(req.body.date)
   if (req.body.inscriptionDeadline) exam.inscriptionDeadline = new Date(req.body.inscriptionDeadline)
   if (req.body.classroom != null) exam.classroom = String(req.body.classroom).trim()
   if (req.body.subjectId) exam.subject = req.body.subjectId
   await exam.save()
+  if (String(previous.subject) !== String(exam.subject)) {
+    await notifyExamChange({
+      subjectId: previous.subject,
+      action: 'borrado',
+      type: previous.type,
+      date: previous.date,
+      inscriptionDeadline: previous.inscriptionDeadline,
+      classroom: previous.classroom,
+    })
+    await notifyExamChange({
+      subjectId: exam.subject,
+      action: 'creado',
+      type: exam.type,
+      date: exam.date,
+      inscriptionDeadline: exam.inscriptionDeadline,
+      classroom: exam.classroom,
+    })
+  } else {
+    await notifyExamChange({
+      subjectId: exam.subject,
+      action: 'editado',
+      type: exam.type,
+      date: exam.date,
+      inscriptionDeadline: exam.inscriptionDeadline,
+      classroom: exam.classroom,
+    })
+  }
   res.json(await exam.populate('subject', 'code name classroom'))
 })
 
 export const deleteExam = asyncHandler(async (req, res) => {
-  const exam = await Exam.findByIdAndDelete(req.params.id)
+  const exam = await Exam.findById(req.params.id)
   if (!exam) throw httpError(404, 'Mesa no encontrada.')
+  await exam.deleteOne()
+  await notifyExamChange({
+    subjectId: exam.subject,
+    action: 'borrado',
+    type: exam.type,
+    date: exam.date,
+    inscriptionDeadline: exam.inscriptionDeadline,
+    classroom: exam.classroom,
+  })
   res.json({ ok: true })
 })
 

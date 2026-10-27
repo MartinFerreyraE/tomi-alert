@@ -4,7 +4,9 @@ import {
   Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography,
 } from '@mui/material'
 import api, { errorMessage } from '../../api'
+import { formatSchedule, statusLabel } from '../../utils'
 import PageHeader from '../../components/PageHeader'
+import StudentPicker from '../../components/StudentPicker'
 import SubjectCascade, { YEAR_LABELS } from '../../components/SubjectCascade'
 
 export default function SubjectsPage() {
@@ -106,7 +108,7 @@ export default function SubjectsPage() {
             <TableRow key={subject._id} hover selected={selected?._id === subject._id} onClick={() => setSelected(subject)} sx={{ cursor: 'pointer' }}>
               <TableCell>{subject.name}</TableCell>
               <TableCell>{subject.classroom || '—'}</TableCell>
-              <TableCell>{subject.schedule || '—'}</TableCell>
+              <TableCell>{formatSchedule(subject.schedule) || '—'}</TableCell>
               <TableCell align="right">
                 <Button size="small" onClick={(event) => { event.stopPropagation(); openEdit(subject) }}>Editar</Button>
               </TableCell>
@@ -120,9 +122,13 @@ export default function SubjectsPage() {
       </Typography>
       {selected && (
         <Stack direction={{ xs: 'column', md: 'row' }} spacing={1} sx={{ mb: 2 }}>
-          <TextField select label="Alumno" value={enrollForm.studentId} onChange={(e) => setEnrollForm({ ...enrollForm, studentId: e.target.value })} sx={{ minWidth: 240 }}>
-            {students.map((student) => <MenuItem key={student._id} value={student._id}>{student.name} ({student.legajo})</MenuItem>)}
-          </TextField>
+          <StudentPicker
+            label="Alumno"
+            options={students}
+            value={enrollForm.studentId}
+            onChange={(studentId) => setEnrollForm({ ...enrollForm, studentId })}
+            helperText="Buscá por nombre o legajo."
+          />
           <TextField select label="Estado" value={enrollForm.status} onChange={(e) => setEnrollForm({ ...enrollForm, status: e.target.value })}>
             <MenuItem value="cursando">Cursando</MenuItem>
             <MenuItem value="regular">Regular</MenuItem>
@@ -141,7 +147,7 @@ export default function SubjectsPage() {
               <TableCell>{item.student?.legajo}</TableCell>
               <TableCell>
                 <Button size="small" onClick={() => patchEnrollment(item._id, { status: item.status === 'regular' ? 'cursando' : 'regular' })}>
-                  {item.status}
+                  {statusLabel(item.status)}
                 </Button>
               </TableCell>
               <TableCell>

@@ -1,3 +1,25 @@
+const WEEKDAYS = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
+
+export function formatSchedule(schedule) {
+  if (!schedule) return ''
+  return WEEKDAYS.reduce(
+    (text, day) => text.replaceAll(day, day.charAt(0).toUpperCase() + day.slice(1)),
+    schedule,
+  )
+}
+
+export function normalizeSearch(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+}
+
+export function statusLabel(status) {
+  if (!status) return ''
+  return status.charAt(0).toUpperCase() + status.slice(1)
+}
+
 export function formatDate(value) {
   if (!value) return '—'
   return new Intl.DateTimeFormat('es-AR', {

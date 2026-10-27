@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Tablero Tomi-Alert</title>
+<style>
+  body { margin: 0; font-family: "Segoe UI", sans-serif; background: #f4f5f7; color: #172b4d; }
+  header { background: #0d47a1; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  header h1 { margin: 0; font-size: 20px; }
+  header span { opacity: .85; font-size: 14px; }
+  .board { display: flex; gap: 12px; padding: 16px; align-items: flex-start; }
+  .col { background: #ebecf0; border-radius: 10px; width: 200px; padding: 8px; }
+  .col h2 { font-size: 13px; margin: 6px 8px 10px; }
+  .card { background: white; border-radius: 8px; padding: 8px; margin-bottom: 6px; box-shadow: 0 1px 0 rgba(9,30,66,.15); }
+  .card b { display: block; font-size: 13px; margin-bottom: 4px; }
+  .card p { margin: 0; font-size: 12px; color: #44546f; }
+  .pts { display: inline-block; margin-top: 8px; background: #deebff; color: #0747a6; border-radius: 8px; padding: 1px 8px; font-size: 12px; font-weight: 700; }
+  .detail { max-width: 820px; margin: 24px; background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .detail h2 { margin-top: 0; }
+  .label { font-size: 12px; color: #6b778c; text-transform: uppercase; letter-spacing: .04em; }
+  ol { padding-left: 18px; }
+  .chart { margin: 24px; background: white; border-radius: 12px; padding: 20px; width: 860px; }
+  .bars { display: flex; gap: 18px; align-items: flex-end; height: 280px; border-bottom: 2px solid #dfe1e6; padding: 0 8px; }
+  .group { width: 72px; display: flex; gap: 4px; align-items: flex-end; justify-content: center; height: 100%; position: relative; }
+  .group span { position: absolute; bottom: -28px; font-size: 12px; }
+  .b1, .b2 { width: 26px; border-radius: 4px 4px 0 0; }
+  .b1 { background: #0d47a1; }
+  .b2 { background: #f9a825; }
+  .legend { margin-top: 36px; font-size: 13px; }
+  .sw { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; }
+</style>
+</head>
+<body>
+<section id="tablero">
+  <header><h1>Tomi-Alert</h1><span>Trello · Backlog inicial · marzo 2026</span></header>
+  <div class="board">
+    <div class="col"><h2>Backlog</h2>
+      <div class="card"><b>TA-04 Avisos</b><p>Publicar horario, aula o un mensaje puntual.</p><span class="pts">5</span></div>
+      <div class="card"><b>TA-05 Preferencias</b><p>Encender o apagar mail y Tomi.</p><span class="pts">5</span></div>
+      <div class="card"><b>TA-06 Tomi</b><p>Consultas con los datos del alumno.</p><span class="pts">8</span></div>
+      <div class="card"><b>TA-07 Recordatorios</b><p>Aviso de novedad y de mesa.</p><span class="pts">8</span></div>
+      <div class="card"><b>TA-08 Cambio de mesa</b><p>Crear, editar o borrar avisa.</p><span class="pts">5</span></div>
+      <div class="card"><b>TA-09 Filtro de envíos</b><p>Estado, alumno, texto y fecha.</p><span class="pts">3</span></div>
+    </div>
+    <div class="col"><h2>Bloqueado</h2></div>
+    <div class="col"><h2>Por hacer</h2>
+      <div class="card"><b>TA-02 Mis materias</b><p>Horario, aula y estado.</p><span class="pts">5</span></div>
+      <div class="card"><b>TA-03 Carga académica</b><p>Aula, mesas, inscriptos y notas.</p><span class="pts">8</span></div>
+    </div>
+    <div class="col"><h2>En curso</h2>
+      <div class="card"><b>TA-00 Esqueleto y semilla</b><p>Modelo, seed y decisión de no usar un modelo de lenguaje.</p><span class="pts">8</span></div>
+    </div>
+    <div class="col"><h2>Listo para prueba</h2></div>
+    <div class="col"><h2>Hecho</h2>
+      <div class="card"><b>TA-01 Login</b><p>Documento, rol y panel que corresponde.</p><span class="pts">5</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="tarjeta" class="detail">
+  <div class="label">Tarjeta · Sprint 5</div>
+  <h2>TA-06 · Preguntarle a Tomi</h2>
+  <p><b>Como</b> alumno <b>necesito</b> preguntar por notas, fechas, horarios y aulas <b>para</b> no repetirle la misma consulta a secretaría.</p>
+  <p class="label">Criterios de aceptación</p>
+  <ol>
+    <li>La respuesta sale de los datos de ese alumno.</li>
+    <li>Si no hay nota, Tomi lo dice y no inventa un número.</li>
+    <li>Si cursa varias materias y no nombra una, pregunta cuál y recuerda la intención.</li>
+  </ol>
+  <p><span class="pts">8 puntos</span></p>
+</section>
+
+<section id="cierre">
+  <header><h1>Tomi-Alert</h1><span>Trello · Cierre del 19 de junio de 2026</span></header>
+  <div class="board">
+    <div class="col"><h2>Backlog</h2></div>
+    <div class="col"><h2>Bloqueado</h2></div>
+    <div class="col"><h2>Por hacer</h2></div>
+    <div class="col"><h2>En curso</h2></div>
+    <div class="col"><h2>Listo para prueba</h2></div>
+    <div class="col"><h2>Hecho</h2>
+      <div class="card"><b>TA-01 a TA-05</b><p>Login, materias, carga, avisos y preferencias.</p><span class="pts">28</span></div>
+      <div class="card"><b>TA-06 Tomi</b><p>Motor de reglas y chat.</p><span class="pts">8</span></div>
+      <div class="card"><b>TA-07 Recordatorios</b><p>Novedad y límite de mesa.</p><span class="pts">8</span></div>
+      <div class="card"><b>TA-08 Cambio de mesa</b><p>Alta, edición y baja avisan.</p><span class="pts">5</span></div>
+      <div class="card"><b>TA-09 Filtro de envíos</b><p>Consulta en el servidor.</p><span class="pts">3</span></div>
+      <div class="card"><b>TA-10 Despliegue</b><p>Vercel, Render y Atlas, documentados.</p><span class="pts">3</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="velocidad" class="chart">
+  <h2>Compromiso y completado por sprint</h2>
+  <div class="bars">
+    <div class="group"><div class="b1" style="height:80px"></div><div class="b2" style="height:80px"></div><span>0</span></div>
+    <div class="group"><div class="b1" style="height:130px"></div><div class="b2" style="height:100px"></div><span>1</span></div>
+    <div class="group"><div class="b1" style="height:230px"></div><div class="b2" style="height:200px"></div><span>2</span></div>
+    <div class="group"><div class="b1" style="height:160px"></div><div class="b2" style="height:130px"></div><span>3</span></div>
+    <div class="group"><div class="b1" style="height:160px"></div><div class="b2" style="height:130px"></div><span>4</span></div>
+    <div class="group"><div class="b1" style="height:230px"></div><div class="b2" style="height:180px"></div><span>5</span></div>
+    <div class="group"><div class="b1" style="height:250px"></div><div class="b2" style="height:230px"></div><span>6</span></div>
+    <div class="group"><div class="b1" style="height:100px"></div><div class="b2" style="height:100px"></div><span>7</span></div>
+  </div>
+  <div class="legend"><span class="sw" style="background:#0d47a1"></span>Compromiso (planificado + arrastre) <span class="sw" style="background:#f9a825;margin-left:16px"></span>Completado</div>
+</section>
+</body>
+</html>

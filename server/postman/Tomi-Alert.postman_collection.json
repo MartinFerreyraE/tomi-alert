@@ -34,7 +34,7 @@
       }
     },
     {
-      "name": "Login Ana",
+      "name": "Login Martin",
       "event": [
         {
           "listen": "test",
@@ -52,7 +52,7 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"document\": \"40111222\",\n  \"password\": \"Alumno123!\"\n}"
+          "raw": "{\n  \"document\": \"41344636\",\n  \"password\": \"Alumno123!\"\n}"
         },
         "url": "{{baseUrl}}/api/auth/login"
       }

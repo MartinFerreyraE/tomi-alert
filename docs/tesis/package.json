@@ -1,0 +1,8 @@
+{
+  "name": "tomi-alert-tesis",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "docx": "^9.14.0"
+  }
+}

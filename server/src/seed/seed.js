@@ -19,18 +19,18 @@ dotenv.config()
 const daysFromNow = (days) => new Date(Date.now() + days * 24 * 60 * 60 * 1000)
 
 const students = [
-  { name: 'Ana Pérez', document: '40111222', documentType: 'dni', email: 'ana.perez@unsta.edu.ar', legajo: 'UIA70035', emailEnabled: true, tomiEnabled: true },
-  { name: 'Luis Gómez', document: '38999888', documentType: 'dni', email: 'luis.gomez@unsta.edu.ar', legajo: 'UIA71842', emailEnabled: false, tomiEnabled: true },
-  { name: 'María López', document: '41222333', documentType: 'dni', email: 'maria.lopez@unsta.edu.ar', legajo: 'UIA77701', emailEnabled: true, tomiEnabled: false },
-  { name: 'Juan Díaz', document: '42555666', documentType: 'dni', email: 'juan.diaz@unsta.edu.ar', legajo: 'UIA74520', emailEnabled: true, tomiEnabled: true },
-  { name: 'Sofía Ruiz', document: '37888999', documentType: 'dni', email: 'sofia.ruiz@unsta.edu.ar', legajo: 'UIA70916', emailEnabled: true, tomiEnabled: true },
-  { name: 'Mateo Castro', document: '40123456', documentType: 'dni', email: 'mateo.castro@unsta.edu.ar', legajo: 'UIA76638', emailEnabled: false, tomiEnabled: false },
-  { name: 'Valentina Ortiz', document: '43000111', documentType: 'dni', email: 'valentina.ortiz@unsta.edu.ar', legajo: 'UIA72204', emailEnabled: true, tomiEnabled: true },
-  { name: 'Nicolás Fernández', document: '39555111', documentType: 'dni', email: 'nicolas.fernandez@unsta.edu.ar', legajo: 'UIA78157', emailEnabled: true, tomiEnabled: true },
-  { name: 'Camila Torres', document: '42000222', documentType: 'dni', email: 'camila.torres@unsta.edu.ar', legajo: 'UIA73390', emailEnabled: true, tomiEnabled: true },
-  { name: 'Facundo Molina', document: '41000333', documentType: 'dni', email: 'facundo.molina@unsta.edu.ar', legajo: 'UIA75741', emailEnabled: true, tomiEnabled: true },
-  { name: 'Lucía Romero', document: 'AAB123456', documentType: 'pasaporte', email: 'lucia.romero@unsta.edu.ar', legajo: 'UIA71088', emailEnabled: false, tomiEnabled: true },
-  { name: 'Bruno Acosta', document: '44000444', documentType: 'dni', email: 'bruno.acosta@unsta.edu.ar', legajo: 'UIA79462', emailEnabled: true, tomiEnabled: true },
+  { name: 'Martin Ferreyra', document: '41344636', documentType: 'dni', email: 'martinferreyrae@gmail.com', legajo: 'UIA70035', emailEnabled: true, tomiEnabled: true },
+  { name: 'Luis Gómez', document: '38999888', documentType: 'dni', email: 'luis.gomez@gmail.com', legajo: 'UIA71842', emailEnabled: false, tomiEnabled: true },
+  { name: 'María López', document: '41222333', documentType: 'dni', email: 'maria.lopez@gmail.com', legajo: 'UIA77701', emailEnabled: true, tomiEnabled: false },
+  { name: 'Juan Díaz', document: '42555666', documentType: 'dni', email: 'juan.diaz@gmail.com', legajo: 'UIA74520', emailEnabled: true, tomiEnabled: true },
+  { name: 'Sofía Ruiz', document: '37888999', documentType: 'dni', email: 'sofia.ruiz@gmail.com', legajo: 'UIA70916', emailEnabled: true, tomiEnabled: true },
+  { name: 'Mateo Castro', document: '40123456', documentType: 'dni', email: 'mateo.castro@gmail.com', legajo: 'UIA76638', emailEnabled: false, tomiEnabled: false },
+  { name: 'Valentina Ortiz', document: '43000111', documentType: 'dni', email: 'valentina.ortiz@gmail.com', legajo: 'UIA72204', emailEnabled: true, tomiEnabled: true },
+  { name: 'Nicolás Fernández', document: '39555111', documentType: 'dni', email: 'nicolas.fernandez@gmail.com', legajo: 'UIA78157', emailEnabled: true, tomiEnabled: true },
+  { name: 'Camila Torres', document: '42000222', documentType: 'dni', email: 'camila.torres@gmail.com', legajo: 'UIA73390', emailEnabled: true, tomiEnabled: true },
+  { name: 'Facundo Molina', document: '41000333', documentType: 'dni', email: 'facundo.molina@gmail.com', legajo: 'UIA75741', emailEnabled: true, tomiEnabled: true },
+  { name: 'Lucía Romero', document: 'AAB123456', documentType: 'pasaporte', email: 'lucia.romero@gmail.com', legajo: 'UIA71088', emailEnabled: false, tomiEnabled: true },
+  { name: 'Bruno Acosta', document: '44000444', documentType: 'dni', email: 'bruno.acosta@gmail.com', legajo: 'UIA79462', emailEnabled: true, tomiEnabled: true },
 ]
 
 const subjects = [
@@ -57,29 +57,60 @@ const subjects = [
   { year: 3, order: 4, code: 'PF', name: 'Proyecto Final', classroom: '1', schedule: 'jueves de 18:00 a 22:00' },
 ]
 
+const codesByYear = (year) => subjects.filter((subject) => subject.year === year).map((subject) => subject.code)
+
+const rows = (email, codes, status, inscribedToExam) =>
+  codes.map((code) => [email, code, status, inscribedToExam])
+
+const juan = 'juan.diaz@gmail.com'
+const valentina = 'valentina.ortiz@gmail.com'
+const facundo = 'facundo.molina@gmail.com'
+const maria = 'maria.lopez@gmail.com'
+
 const enrollmentPlan = [
-  ['ana.perez@unsta.edu.ar', 'DESW', 'cursando', false],
-  ['ana.perez@unsta.edu.ar', 'FCC', 'regular', false],
-  ['luis.gomez@unsta.edu.ar', 'BD', 'cursando', false],
-  ['luis.gomez@unsta.edu.ar', 'FCC', 'regular', false],
-  ['maria.lopez@unsta.edu.ar', 'DAW', 'regular', true],
-  ['juan.diaz@unsta.edu.ar', 'AYPA', 'cursando', false],
-  ['juan.diaz@unsta.edu.ar', 'ALG1', 'cursando', false],
-  ['sofia.ruiz@unsta.edu.ar', 'DESW', 'cursando', false],
-  ['sofia.ruiz@unsta.edu.ar', 'INGA1', 'cursando', false],
-  ['mateo.castro@unsta.edu.ar', 'BD', 'cursando', false],
-  ['mateo.castro@unsta.edu.ar', 'RRHH', 'cursando', false],
-  ['valentina.ortiz@unsta.edu.ar', 'FRONT', 'cursando', false],
-  ['valentina.ortiz@unsta.edu.ar', 'FH2', 'cursando', false],
-  ['nicolas.fernandez@unsta.edu.ar', 'BACK', 'cursando', false],
-  ['nicolas.fernandez@unsta.edu.ar', 'SEM2', 'cursando', false],
-  ['camila.torres@unsta.edu.ar', 'FRONT', 'cursando', false],
-  ['camila.torres@unsta.edu.ar', 'CCA', 'regular', false],
-  ['facundo.molina@unsta.edu.ar', 'TEST', 'cursando', false],
-  ['facundo.molina@unsta.edu.ar', 'PF', 'cursando', false],
-  ['lucia.romero@unsta.edu.ar', 'FCC', 'regular', false],
-  ['bruno.acosta@unsta.edu.ar', 'AYPA', 'cursando', false],
-  ['bruno.acosta@unsta.edu.ar', 'ALG2', 'cursando', false],
+  // Juan cursa el primer año completo.
+  ...rows(juan, codesByYear(1), 'cursando', false),
+
+  // Valentina ya regularizó primero y cursa todo segundo.
+  ...rows(valentina, codesByYear(1), 'regular', true),
+  ...rows(valentina, codesByYear(2), 'cursando', false),
+
+  // Facundo regularizó primero y segundo, y cursa todo tercero. Adeuda las mesas de segundo.
+  ...rows(facundo, codesByYear(1), 'regular', true),
+  ...rows(facundo, codesByYear(2), 'regular', false),
+  ...rows(facundo, codesByYear(3), 'cursando', false),
+
+  // María está en tercero y todavía arrastra materias de segundo.
+  ...rows(maria, codesByYear(1), 'regular', true),
+  [maria, 'DAW', 'regular', true],
+  [maria, 'TEST', 'cursando', false],
+  [maria, 'INGB1', 'cursando', false],
+  [maria, 'PF', 'cursando', false],
+  [maria, 'INGA2', 'cursando', false],
+  [maria, 'SEM2', 'cursando', false],
+  [maria, 'CCA', 'cursando', false],
+  [maria, 'SEM3', 'cursando', false],
+  [maria, 'FH2', 'regular', true],
+  [maria, 'FRONT', 'regular', true],
+  [maria, 'FCC', 'regular', false],
+  [maria, 'BACK', 'regular', false],
+
+  // El resto cursa un tramo de la carrera, sin el año completo.
+  ['martinferreyrae@gmail.com', 'DESW', 'cursando', false],
+  ['martinferreyrae@gmail.com', 'FCC', 'regular', false],
+  ['luis.gomez@gmail.com', 'BD', 'cursando', false],
+  ['luis.gomez@gmail.com', 'FCC', 'regular', false],
+  ['sofia.ruiz@gmail.com', 'DESW', 'cursando', false],
+  ['sofia.ruiz@gmail.com', 'INGA1', 'cursando', false],
+  ['mateo.castro@gmail.com', 'BD', 'cursando', false],
+  ['mateo.castro@gmail.com', 'RRHH', 'cursando', false],
+  ['nicolas.fernandez@gmail.com', 'BACK', 'cursando', false],
+  ['nicolas.fernandez@gmail.com', 'SEM2', 'cursando', false],
+  ['camila.torres@gmail.com', 'FRONT', 'cursando', false],
+  ['camila.torres@gmail.com', 'CCA', 'regular', false],
+  ['lucia.romero@gmail.com', 'FCC', 'regular', false],
+  ['bruno.acosta@gmail.com', 'AYPA', 'cursando', false],
+  ['bruno.acosta@gmail.com', 'ALG2', 'cursando', false],
 ]
 
 export async function seedDatabase() {
@@ -151,9 +182,14 @@ export async function seedDatabase() {
   }
 
   await Grade.create([
-    { student: studentDocs['ana.perez@unsta.edu.ar']._id, subject: subjectDocs.DESW._id, instance: 'parcial', score: 8 },
-    { student: studentDocs['luis.gomez@unsta.edu.ar']._id, subject: subjectDocs.BD._id, instance: 'parcial', score: 5 },
-    { student: studentDocs['maria.lopez@unsta.edu.ar']._id, subject: subjectDocs.DAW._id, instance: 'parcial', score: 9 },
+    { student: studentDocs['martinferreyrae@gmail.com']._id, subject: subjectDocs.DESW._id, instance: 'parcial', score: 8 },
+    { student: studentDocs['luis.gomez@gmail.com']._id, subject: subjectDocs.BD._id, instance: 'parcial', score: 5 },
+    { student: studentDocs[maria]._id, subject: subjectDocs.DAW._id, instance: 'parcial', score: 9 },
+    { student: studentDocs[maria]._id, subject: subjectDocs.FRONT._id, instance: 'parcial', score: 8 },
+    { student: studentDocs[valentina]._id, subject: subjectDocs.ALG1._id, instance: 'parcial', score: 7 },
+    { student: studentDocs[valentina]._id, subject: subjectDocs.DESW._id, instance: 'final', score: 8 },
+    { student: studentDocs[facundo]._id, subject: subjectDocs.AYPA._id, instance: 'final', score: 9 },
+    { student: studentDocs[facundo]._id, subject: subjectDocs.BACK._id, instance: 'parcial', score: 6 },
   ])
 
   await Exam.create([
@@ -212,7 +248,7 @@ if (process.argv[1] && process.argv[1].endsWith('seed.js')) {
     .then(() => {
       console.log('Datos de demostración cargados.')
       console.log('Admin: admin / Admin123!')
-      console.log('Alumna: 40111222 / Alumno123!')
+      console.log('Alumno: 41344636 / Alumno123!')
       console.log('Alumno sin mail: 38999888 / Alumno123!')
       console.log('Pasaporte: AAB123456 / Alumno123!')
     })

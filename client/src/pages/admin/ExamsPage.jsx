@@ -6,7 +6,7 @@ import {
 import api, { errorMessage } from '../../api'
 import PageHeader from '../../components/PageHeader'
 import SubjectCascade from '../../components/SubjectCascade'
-import { formatDate, toDateInput } from '../../utils'
+import { formatDate, statusLabel, toDateInput } from '../../utils'
 
 const empty = { careerId: '', year: '', subjectId: '', type: 'parcial', date: '', inscriptionDeadline: '', classroom: '' }
 
@@ -17,6 +17,7 @@ export default function ExamsPage() {
   const [open, setOpen] = useState(false)
   const [form, setForm] = useState(empty)
   const [error, setError] = useState('')
+  const [ok, setOk] = useState('')
 
   async function load() {
     const [examRes, careerRes, subjectRes] = await Promise.all([
@@ -50,23 +51,32 @@ export default function ExamsPage() {
     setOpen(true)
   }
 
+  function eventLabel(type) {
+    return type === 'final' ? 'Final' : 'Parcial'
+  }
+
   async function save() {
     setError('')
+    setOk('')
     const payload = { ...form, subjectId: form.subjectId }
+    const editing = Boolean(form.id)
     try {
-      if (form.id) await api.put(`/api/exams/${form.id}`, payload)
+      if (editing) await api.put(`/api/exams/${form.id}`, payload)
       else await api.post('/api/exams', payload)
       setOpen(false)
+      setOk(`${eventLabel(form.type)} ${editing ? 'actualizado' : 'creado'}. Los alumnos inscriptos reciben el mail y el aviso de Tomi con la información.`)
       await load()
     } catch (err) {
       setError(errorMessage(err, 'No se pudo guardar la mesa.'))
     }
   }
 
-  async function remove(id) {
+  async function remove(exam) {
     setError('')
+    setOk('')
     try {
-      await api.delete(`/api/exams/${id}`)
+      await api.delete(`/api/exams/${exam._id}`)
+      setOk(`${eventLabel(exam.type)} eliminado. Los alumnos inscriptos reciben el mail y el aviso de Tomi.`)
       await load()
     } catch (err) {
       setError(errorMessage(err, 'No se pudo borrar la mesa.'))
@@ -77,6 +87,7 @@ export default function ExamsPage() {
     <>
       <PageHeader title="Mesas y parciales" subtitle="Fechas, aula y límite de inscripción." action={<Button variant="contained" onClick={openCreate}>Nueva fecha</Button>} />
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      {ok && <Alert severity="success" sx={{ mb: 2 }}>{ok}</Alert>}
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -87,13 +98,13 @@ export default function ExamsPage() {
           {exams.map((exam) => (
             <TableRow key={exam._id}>
               <TableCell>{exam.subject?.name}</TableCell>
-              <TableCell>{exam.type}</TableCell>
+              <TableCell>{statusLabel(exam.type)}</TableCell>
               <TableCell>{formatDate(exam.date)}</TableCell>
               <TableCell>{formatDate(exam.inscriptionDeadline)}</TableCell>
               <TableCell>{exam.classroom || '—'}</TableCell>
               <TableCell align="right">
                 <Button size="small" onClick={() => edit(exam)}>Editar</Button>
-                <Button size="small" color="error" onClick={() => remove(exam._id)}>Borrar</Button>
+                <Button size="small" color="error" onClick={() => remove(exam)}>Borrar</Button>
               </TableCell>
             </TableRow>
           ))}

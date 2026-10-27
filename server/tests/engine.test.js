@@ -6,6 +6,7 @@ import {
   handleTurn,
   buildExamReminder,
   buildGradeMessage,
+  buildExamChangeMessage,
 } from '../src/chat/engine.js'
 
 const subjects = [
@@ -124,6 +125,21 @@ test('pregunta cuando el nombre coincide con más de una materia', () => {
   const exact = handleTurn({ text: 'álgebra ii', pendingIntent: 'notas', subjects: algebras, context })
   assert.equal(exact.pendingIntent, null)
   assert.match(exact.reply, /parcial: 7/)
+})
+
+test('el aviso de mesa incluye la información nueva', () => {
+  const message = buildExamChangeMessage({
+    action: 'editado',
+    subjectName: 'Fund. del Control de Calidad',
+    type: 'final',
+    date: '2026-11-18T15:00:00.000Z',
+    inscriptionDeadline: '2026-11-12T15:00:00.000Z',
+    classroom: '9',
+  })
+  assert.equal(
+    message,
+    'Se modificó el final de Fund. del Control de Calidad. La fecha es el 18/11/2026. El aula es 9. El límite de inscripción es el 12/11/2026.'
+  )
 })
 
 test('el aviso de nota incluye instancia y valor', () => {

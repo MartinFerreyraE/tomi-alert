@@ -263,6 +263,25 @@ export function buildGradeMessage({ subjectName, instance, score }) {
   return `Se cargó una nota de ${instance} en ${subjectName}: ${formatScore(score)}.`
 }
 
+export function buildExamChangeMessage({ action, subjectName, type, date, inscriptionDeadline, classroom }) {
+  const kind = type === 'final' ? 'final' : 'parcial'
+  const when = formatDate(date)
+  const room = classroom ? ` El aula es ${classroom}.` : ''
+  const limit = type === 'final' && inscriptionDeadline
+    ? ` El límite de inscripción es el ${formatDate(inscriptionDeadline)}.`
+    : ''
+  const current = `La fecha es el ${when}.${room}${limit}`
+  if (action === 'creado') return `Se creó un ${kind} de ${subjectName}. ${current}`
+  if (action === 'borrado') {
+    const oldRoom = classroom ? ` El aula era ${classroom}.` : ''
+    const oldLimit = type === 'final' && inscriptionDeadline
+      ? ` El límite de inscripción era el ${formatDate(inscriptionDeadline)}.`
+      : ''
+    return `Se eliminó el ${kind} de ${subjectName}. Estaba previsto para el ${when}.${oldRoom}${oldLimit}`
+  }
+  return `Se modificó el ${kind} de ${subjectName}. ${current}`
+}
+
 export function buildExamReminder({ subjectName, deadline }) {
   return `Tenés ${subjectName} regularizada y todavía no figurás inscripto a la mesa. El límite de inscripción es el ${formatDate(deadline)}. Conviene que te anotes antes de esa fecha.`
 }

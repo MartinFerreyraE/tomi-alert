@@ -98,7 +98,7 @@ Al cerrar un sprint se registran cuatro números: planificado, completado, carry
 ## Pruebas
 
 - Unitarias del motor, en `server/tests/engine.test.js`: normalización, prioridad de intenciones, materia faltante, turno siguiente, nota existente, nota ausente, materia no inscripta y texto del recordatorio.
-- Flujo de API, en `server/tests/flow.test.js`: login de Ana, consulta de nota en Desarrollo de Software, aviso a Fund. del Control de Calidad con Luis omitido, mensaje proactivo y recordatorio de mesa.
+- Flujo de API, en `server/tests/flow.test.js`: login de Martin, consulta de nota en Desarrollo de Software, aviso a Fund. del Control de Calidad con Luis omitido, mensaje proactivo y recordatorio de mesa.
 - Postman: colección en `server/postman/Tomi-Alert.postman_collection.json`.
 - Camino feliz manual: el recorrido de abajo.
 
@@ -113,12 +113,12 @@ Un perfil fullstack junior durante 4 meses, en el orden de magnitud de los presu
 1. `docker compose up -d`, `npm run seed`, `npm run dev`.
 2. Entrar como `admin` / `Admin123!`.
 3. En Avisos, publicar "Cambio de aula" de tipo aula para Fund. del Control de Calidad (Segundo Año).
-4. En Envíos, mostrar a Ana como simulado o enviado y a Luis como omitido.
-5. Entrar como Ana, DNI `40111222` / `Alumno123!`. Ver el aviso y abrirlo en Tomi.
+4. En Envíos, mostrar a Martin como simulado o enviado y a Luis como omitido.
+5. Entrar como Martin, DNI `41344636` / `Alumno123!`. Ver el aviso y abrirlo en Tomi.
 6. Escribir "qué nota tengo en desarrollo de software". Tiene que responder el parcial con 8.
 7. Escribir "notas de fund. del control de calidad". Tiene que decir que no hay nota cargada.
-8. Volver a administración, cargar una nota de Ana en Fund. del Control de Calidad y generar recordatorios de mesa.
-9. Volver a Ana: el chat tiene la nota nueva y el recordatorio de inscripción, porque la mesa de Fund. del Control de Calidad vence dentro de 7 días y ella está regular y no inscripta.
+8. Volver a administración, cargar una nota de Martin en Fund. del Control de Calidad y generar recordatorios de mesa.
+9. Volver a Martin: el chat tiene la nota nueva y el recordatorio de inscripción, porque la mesa de Fund. del Control de Calidad vence dentro de 7 días y él está regular y no inscripto.
 10. Opcional: entrar como María (DNI `41222333`). Tiene Tomi desactivado, así que ese recordatorio no le llega. Lucía ingresa con el pasaporte `AAB123456`.
 
 ## Fuera del MVP

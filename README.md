@@ -26,7 +26,7 @@ npm run dev
 | Rol | Usuario | Contraseña |
 | --- | --- | --- |
 | Administración | admin | Admin123! |
-| Alumna, mail y Tomi activos | 40111222 (DNI) | Alumno123! |
+| Alumno, mail y Tomi activos | 41344636 (DNI) | Alumno123! |
 | Alumno, mail desactivado y Tomi activo | 38999888 (DNI) | Alumno123! |
 | Alumna, Tomi desactivado | 41222333 (DNI) | Alumno123! |
 | Alumna con pasaporte | AAB123456 | Alumno123! |
@@ -48,10 +48,10 @@ La colección de Postman está en `server/postman/Tomi-Alert.postman_collection.
 ## Recorrido de la defensa
 
 1. Entrá como administración y publicá un aviso de cambio de aula para Fund. del Control de Calidad.
-2. En Envíos, Ana figura como enviada o simulada y Luis como omitido.
-3. Entrá como Ana. El aviso está en Avisos y Tomi lo dejó en el chat.
+2. En Envíos, Martin figura como enviado o simulado y Luis como omitido.
+3. Entrá como Martin. El aviso está en Avisos y Tomi lo dejó en el chat.
 4. Preguntale a Tomi: "qué nota tengo en programación". Responde el parcial con 8.
-5. Volvé a administración y pulsá "Generar recordatorios de mesa". Ana, con Calidad regularizada y sin inscripción, recibe el recordatorio.
+5. Volvé a administración y pulsá "Generar recordatorios de mesa". Martin, con Calidad regularizada y sin inscripción, recibe el recordatorio.
 
 El guion completo, el backlog y el índice del informe están en [docs/INFORME.md](docs/INFORME.md).
 

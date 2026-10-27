@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Velocidad</title>
+<style>
+  body { margin: 0; font-family: "Segoe UI", sans-serif; background: white; color: #172b4d; }
+  .chart { padding: 24px 28px 48px; width: 820px; }
+  h2 { margin: 0 0 8px; font-size: 18px; }
+  .bars { display: flex; gap: 22px; align-items: flex-end; height: 260px; border-bottom: 2px solid #dfe1e6; }
+  .group { width: 70px; display: flex; gap: 4px; align-items: flex-end; justify-content: center; height: 100%; position: relative; }
+  .group span { position: absolute; bottom: -26px; font-size: 13px; }
+  .b1, .b2 { width: 24px; border-radius: 3px 3px 0 0; }
+  .b1 { background: #0d47a1; }
+  .b2 { background: #f9a825; }
+  .legend { margin-top: 36px; font-size: 14px; }
+  .sw { display: inline-block; width: 12px; height: 12px; margin-right: 6px; }
+</style>
+</head>
+<body>
+<section class="chart">
+  <h2>Compromiso y completado por sprint</h2>
+  <div class="bars">
+    <div class="group"><div class="b1" style="height:78px"></div><div class="b2" style="height:78px"></div><span>0</span></div>
+    <div class="group"><div class="b1" style="height:120px"></div><div class="b2" style="height:92px"></div><span>1</span></div>
+    <div class="group"><div class="b1" style="height:212px"></div><div class="b2" style="height:184px"></div><span>2</span></div>
+    <div class="group"><div class="b1" style="height:148px"></div><div class="b2" style="height:120px"></div><span>3</span></div>
+    <div class="group"><div class="b1" style="height:148px"></div><div class="b2" style="height:120px"></div><span>4</span></div>
+    <div class="group"><div class="b1" style="height:212px"></div><div class="b2" style="height:166px"></div><span>5</span></div>
+    <div class="group"><div class="b1" style="height:230px"></div><div class="b2" style="height:212px"></div><span>6</span></div>
+    <div class="group"><div class="b1" style="height:92px"></div><div class="b2" style="height:92px"></div><span>7</span></div>
+  </div>
+  <div class="legend"><span class="sw" style="background:#0d47a1"></span>Compromiso <span class="sw" style="background:#f9a825;margin-left:16px"></span>Completado</div>
+</section>
+</body>
+</html>

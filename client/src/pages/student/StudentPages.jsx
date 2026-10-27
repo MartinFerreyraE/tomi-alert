@@ -6,7 +6,7 @@ import {
 import api, { errorMessage } from '../../api'
 import PageHeader from '../../components/PageHeader'
 import { YEAR_LABELS } from '../../components/SubjectCascade'
-import { formatDate } from '../../utils'
+import { formatDate, formatSchedule, statusLabel } from '../../utils'
 
 function useStudentData() {
   const [subjects, setSubjects] = useState([])
@@ -43,13 +43,13 @@ export function StudentHome() {
               <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
                   <Typography fontWeight={800}>{subject.name}</Typography>
-                  <Chip size="small" label={subject.enrollmentStatus} color={subject.enrollmentStatus === 'regular' ? 'success' : 'info'} />
+                  <Chip size="small" label={statusLabel(subject.enrollmentStatus)} color={subject.enrollmentStatus === 'regular' ? 'success' : 'info'} />
                 </Stack>
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>Aula {subject.classroom || '—'}</Typography>
-                <Typography variant="body2" sx={{ mt: 1 }}>{subject.schedule}</Typography>
+                <Typography variant="body2" sx={{ mt: 1 }}>{formatSchedule(subject.schedule)}</Typography>
                 {subject.enrollmentStatus === 'regular' && (
                   <Typography variant="body2" sx={{ mt: 1 }}>
-                    Mesa: {subject.inscribedToExam ? 'ya figurás inscripto' : 'todavía no figurás inscripto'}
+                    Mesa: {subject.inscribedToExam ? 'Ya figurás inscripto' : 'Todavía no figurás inscripto'}
                   </Typography>
                 )}
                 <Typography variant="body2" color="primary" fontWeight={700} sx={{ mt: 'auto', pt: 2, textAlign: 'right' }}>
@@ -77,7 +77,7 @@ export function StudentGrades() {
           {grades.map((grade) => (
             <TableRow key={grade._id}>
               <TableCell>{grade.subject?.name}</TableCell>
-              <TableCell>{grade.instance}</TableCell>
+              <TableCell>{statusLabel(grade.instance)}</TableCell>
               <TableCell>{grade.score}</TableCell>
               <TableCell>{formatDate(grade.loadedAt)}</TableCell>
             </TableRow>
@@ -100,7 +100,7 @@ export function StudentExams() {
           {exams.map((exam) => (
             <TableRow key={exam._id}>
               <TableCell>{exam.subject?.name}</TableCell>
-              <TableCell>{exam.type}</TableCell>
+              <TableCell>{statusLabel(exam.type)}</TableCell>
               <TableCell>{formatDate(exam.date)}</TableCell>
               <TableCell>{formatDate(exam.inscriptionDeadline)}</TableCell>
               <TableCell>{exam.classroom || exam.subject?.classroom || '—'}</TableCell>
@@ -125,7 +125,7 @@ export function StudentNotices() {
             <CardContent>
               <Stack direction="row" spacing={1} alignItems="center">
                 <Typography fontWeight={700}>{notice.title}</Typography>
-                <Chip size="small" label={notice.type} />
+                <Chip size="small" label={statusLabel(notice.type)} />
               </Stack>
               <Typography variant="body2" sx={{ mt: 1 }}>{notice.body}</Typography>
               <Typography variant="caption" color="text.secondary">{notice.subject?.name} · {formatDate(notice.createdAt)}</Typography>

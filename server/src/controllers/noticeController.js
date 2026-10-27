@@ -3,9 +3,9 @@ import { Subject } from '../models/Subject.js'
 import { Enrollment } from '../models/Enrollment.js'
 import { User } from '../models/User.js'
 import { asyncHandler, httpError } from '../http.js'
-import { fanOutNotice } from '../services/notifyService.js'
+import { deliverToStudent, fanOutNotice } from '../services/notifyService.js'
 
-const TYPES = ['parcial', 'final', 'horario', 'aula', 'personalizado']
+const TYPES = ['horario', 'aula', 'personalizado']
 
 async function resolveRecipients({ type, subjectId, recipientIds }) {
   if (type === 'personalizado') {
@@ -66,33 +66,11 @@ export const resendNotice = asyncHandler(async (req, res) => {
   const notice = await Notice.findById(req.params.id).populate('subject', 'name')
   if (!notice) throw httpError(404, 'Aviso no encontrado.')
   const students = await User.find({ _id: { $in: notice.recipients } })
-  const { MailLog } = await import('../models/MailLog.js')
-  const { Preference } = await import('../models/Preference.js')
-  const { sendMail } = await import('../services/mailService.js')
   const { buildNoticeMessage } = await import('../chat/engine.js')
   const text = buildNoticeMessage(notice, notice.subject?.name)
-  const subjectLine = notice.subject?.name ? `${notice.title} (${notice.subject.name})` : notice.title
+  const title = notice.subject?.name ? `${notice.title} (${notice.subject.name})` : notice.title
   for (const student of students) {
-    const preference = await Preference.findOne({ student: student._id })
-    const emailEnabled = preference ? preference.emailEnabled : true
-    if (!emailEnabled) {
-      await MailLog.create({
-        notice: notice._id,
-        student: student._id,
-        status: 'omitido',
-        detail: 'El alumno desactivó las notificaciones por email.',
-        body: text,
-      })
-      continue
-    }
-    const result = await sendMail({ to: student.email, subject: subjectLine, text })
-    await MailLog.create({
-      notice: notice._id,
-      student: student._id,
-      status: result.status,
-      detail: result.detail,
-      body: text,
-    })
+    await deliverToStudent({ student, title, text, noticeId: notice._id })
   }
   res.json({ ok: true, recipients: students.length })
 })

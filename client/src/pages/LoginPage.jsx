@@ -4,12 +4,6 @@ import { Alert, Box, Button, Paper, Stack, TextField, Typography } from '@mui/ma
 import { errorMessage } from '../api'
 import { useAuth } from '../auth/AuthContext'
 
-const demos = [
-  ['Administración', 'admin', 'Admin123!'],
-  ['Ana (mail y Tomi activos)', '40111222', 'Alumno123!'],
-  ['Luis (mail desactivado)', '38999888', 'Alumno123!'],
-]
-
 export default function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -53,13 +47,6 @@ export default function LoginPage() {
             <TextField label="DNI o pasaporte" value={document} onChange={(e) => setDocument(e.target.value)} required autoComplete="username" />
             <TextField label="Contraseña" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" />
             <Button type="submit" variant="contained" size="large" disabled={loading}>{loading ? 'Ingresando...' : 'Entrar'}</Button>
-          </Stack>
-          <Stack spacing={1} sx={{ mt: 3 }}>
-            {demos.map(([label, demoDocument, demoPassword]) => (
-              <Button key={demoDocument} size="small" onClick={() => { setDocument(demoDocument); setPassword(demoPassword) }}>
-                {label}: {demoDocument}
-              </Button>
-            ))}
           </Stack>
         </Paper>
       </Box>

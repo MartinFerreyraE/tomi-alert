@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --watch src/index.js",
+    "dev": "node --watch --watch-path=./src src/index.js",
     "start": "node src/index.js",
     "seed": "node src/seed/seed.js",
     "test": "node --test tests/engine.test.js tests/flow.test.js"

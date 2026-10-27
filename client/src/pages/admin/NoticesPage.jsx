@@ -5,7 +5,7 @@ import {
 import api, { errorMessage } from '../../api'
 import PageHeader from '../../components/PageHeader'
 import SubjectCascade from '../../components/SubjectCascade'
-import { formatDate } from '../../utils'
+import { formatDate, statusLabel } from '../../utils'
 
 const empty = { title: '', body: '', type: 'aula', careerId: '', year: '', subjectId: '', recipientIds: [] }
 
@@ -62,7 +62,7 @@ export default function NoticesPage() {
 
   return (
     <>
-      <PageHeader title="Avisos" subtitle="Por materia, a los inscriptos, o a alumnos puntuales." />
+      <PageHeader title="Avisos" subtitle="Cambios de horario, de aula, o un mensaje a alumnos puntuales. Las notas se cargan en Notas." />
       {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
       {ok && <Alert severity="success" sx={{ mb: 2 }}>{ok}</Alert>}
       <Paper variant="outlined" component="form" onSubmit={publish} sx={{ p: 2, mb: 3 }}>
@@ -71,8 +71,6 @@ export default function NoticesPage() {
           <TextField label="Mensaje" value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} required multiline minRows={3} />
           <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
             <TextField select label="Tipo" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })} sx={{ minWidth: 180 }}>
-              <MenuItem value="parcial">Parcial</MenuItem>
-              <MenuItem value="final">Final</MenuItem>
               <MenuItem value="horario">Horario</MenuItem>
               <MenuItem value="aula">Aula</MenuItem>
               <MenuItem value="personalizado">Personalizado</MenuItem>
@@ -103,7 +101,7 @@ export default function NoticesPage() {
               <div>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <Typography fontWeight={700}>{notice.title}</Typography>
-                  <Chip size="small" label={notice.type} />
+                  <Chip size="small" label={statusLabel(notice.type)} />
                 </Stack>
                 <Typography variant="body2" sx={{ mt: 0.5 }}>{notice.body}</Typography>
                 <Typography variant="caption" color="text.secondary">
